@@ -1,5 +1,5 @@
 /*!
- * Plugiit Announcements – bars (dismiss, rotation, countdown) and popups.
+ * Announcements – bars (dismiss, rotation, countdown) and popups.
  */
 (function () {
     'use strict';

@@ -1,10 +1,10 @@
-![Plugiit Announcements](.github/banner.png)
+![Announcements](.github/banner.png)
 
-# Plugiit Announcements
+# Announcements
 
 Scheduled announcements for Azuriom: bars at the top of every page and modal popups, targeted by audience, role and page.
 
-Azuriom plugin · v1.0.0 · by Plugiit
+Azuriom plugin · v1.0.0 · by Takevant
 
 ## Features
 
@@ -115,7 +115,7 @@ The plugin ships no stylesheet: bars are Bootstrap alerts and popups are Bootstr
 
 ## Support
 
-Open an issue on GitHub or contact Plugiit.
+Open an issue on GitHub or contact [Takevant](https://takevant.com).
 
 ## Contributing
 
