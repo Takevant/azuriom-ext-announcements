@@ -32,7 +32,8 @@ class InjectAnnouncements
             $announcements = Announcements::forRequest($request, $request->user());
             $hasBars = str_contains($content, 'id="plugiit-ann-bars"');
 
-            if ($announcements['popups'] === [] && ($announcements['bars'] === [] || $hasBars)) {
+            // The script is needed by the bars, even when the theme includes them.
+            if ($announcements['popups'] === [] && $announcements['bars'] === []) {
                 return $response;
             }
 
