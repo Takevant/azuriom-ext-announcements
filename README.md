@@ -19,7 +19,6 @@ Azuriom plugin · v1.0.0 · by Takevant
 - **Popup frequency**: only once, once per browsing session or on every page load.
 - **Priority**: orders the bars and picks the popup. Only **one popup per page load** is shown: the highest-priority one not already seen.
 - **Multiple active bars**: **stacked** or **rotating** (configurable delay, paused on hover and focus, previous / next buttons).
-- **Plays well with Plugiit Cookie Consent**: when it is installed, the popup waits until the visitor has answered the cookie banner, so two windows never stack.
 - **Cached** active announcements, invalidated on every creation, update or deletion.
 - **Accessible**: ARIA region, modal with trapped focus, Escape to close, labelled buttons.
 - Action log entries for announcements (created, updated, deleted) and settings changes.
@@ -106,7 +105,7 @@ window.Announcements.closePopup();
 
 ### Compatibility
 
-The plugin ships no stylesheet: bars are Bootstrap alerts and popups are Bootstrap modals, so they follow the colors of the theme, including its dark mode. Its IDs and data attributes are prefixed with `plugiit-ann-`. The script is an IIFE that only relies on the Bootstrap script loaded by Azuriom themes (`bootstrap.Modal`). Bars stay in the page flow; the popup uses the Bootstrap modal z-index (`1055`), below a cookie banner at `1080`.
+The plugin ships no stylesheet: bars are Bootstrap alerts and popups are Bootstrap modals, so they follow the colors of the theme, including its dark mode. Its IDs and data attributes are prefixed with `plugiit-ann-`. The script is an IIFE that only relies on the Bootstrap script loaded by Azuriom themes (`bootstrap.Modal`). Bars stay in the page flow; the popup uses the Bootstrap modal z-index (`1055`).
 
 ## Known limitations
 

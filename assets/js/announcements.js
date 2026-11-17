@@ -308,27 +308,7 @@
             document.dispatchEvent(new CustomEvent('plugiit-ann:popup-closed'));
         });
 
-        var schedulePopup = function () {
-            window.setTimeout(openPopup, 600);
-        };
-
-        // Do not stack the popup over the cookie consent banner (plugiit-cookie-consent).
-        var consent = window.PlugiitCookieConsent;
-
-        if (consent && typeof consent.isOpen === 'function' && consent.isOpen()) {
-            document.addEventListener('plugiit-cc:closed', schedulePopup, {once: true});
-        } else if (!consent && document.getElementById('plugiit-cc-config')) {
-            // The consent script is not initialized yet (deferred scripts order).
-            document.addEventListener('plugiit-cc:ready', function (event) {
-                if (event.detail && event.detail.pending) {
-                    document.addEventListener('plugiit-cc:closed', schedulePopup, {once: true});
-                } else {
-                    schedulePopup();
-                }
-            }, {once: true});
-        } else {
-            schedulePopup();
-        }
+        window.setTimeout(openPopup, 600);
     }
 
     /* ------------------------------------------------------------------ */
