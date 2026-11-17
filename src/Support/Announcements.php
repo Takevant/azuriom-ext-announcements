@@ -182,6 +182,10 @@ class Announcements
             // Elements on the bar use the inverted colors.
             'bar-badge' => "background-color: {$text}; color: {$background};",
             'bar-button' => self::buttonColors($text, $background, true),
+            // The popup keeps the theme colors, only its elements are colored.
+            'popup-icon' => "color: {$background};",
+            'popup-badge' => "background-color: {$background}; color: {$text};",
+            'popup-button' => self::buttonColors($background, $text),
             default => '',
         };
     }
@@ -205,20 +209,5 @@ class Announcements
         ];
 
         return collect($variables)->map(fn (string $value, string $name) => "{$name}: {$value};")->implode(' ');
-    }
-
-    /**
-     * Inline CSS variables for the custom style.
-     */
-    public static function styleAttribute(array $announcement): string
-    {
-        if ($announcement['style'] !== 'custom') {
-            return '';
-        }
-
-        $background = $announcement['color'] ?? '#5b5bd6';
-        $text = $announcement['text_color'] ?? '#ffffff';
-
-        return "--plugiit-ann-bg: {$background}; --plugiit-ann-fg: {$text};";
     }
 }

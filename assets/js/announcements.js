@@ -236,10 +236,11 @@
     }
 
     /* ------------------------------------------------------------------ */
-    /* Popup (at most one per page load)                                   */
+    /* Popup (at most one per page load), displayed with a Bootstrap modal */
     /* ------------------------------------------------------------------ */
 
     var popup = null;
+    var modal = null;
     var lastFocus = null;
 
     function alreadySeen(element) {
@@ -268,71 +269,20 @@
         }
     }
 
-    function focusables(element) {
-        return Array.prototype.filter.call(
-            element.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'),
-            function (item) {
-                return !item.disabled && item.offsetParent !== null;
-            }
-        );
-    }
-
     function openPopup() {
+        if (!window.bootstrap || !window.bootstrap.Modal) {
+            return; // The theme does not load the Bootstrap script.
+        }
+
         lastFocus = document.activeElement;
-        popup.hidden = false;
+        modal = window.bootstrap.Modal.getOrCreateInstance(popup);
+        modal.show();
         markSeen(popup);
-        popup.querySelector('.plugiit-ann-dialog').focus();
-        document.addEventListener('keydown', onKeydown);
     }
 
     function closePopup() {
-        if (!popup || popup.hidden) {
-            return;
-        }
-
-        popup.hidden = true;
-        document.removeEventListener('keydown', onKeydown);
-
-        if (lastFocus && typeof lastFocus.focus === 'function' && document.body.contains(lastFocus)) {
-            lastFocus.focus();
-        }
-
-        document.dispatchEvent(new CustomEvent('plugiit-ann:popup-closed'));
-    }
-
-    function onKeydown(event) {
-        if (event.key === 'Escape') {
-            event.preventDefault();
-            closePopup();
-
-            return;
-        }
-
-        if (event.key !== 'Tab') {
-            return;
-        }
-
-        var dialog = popup.querySelector('.plugiit-ann-dialog');
-        var elements = focusables(dialog);
-
-        if (elements.length === 0) {
-            event.preventDefault();
-
-            return;
-        }
-
-        var first = elements[0];
-        var last = elements[elements.length - 1];
-
-        if (event.shiftKey && (document.activeElement === first || document.activeElement === dialog)) {
-            event.preventDefault();
-            last.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-            event.preventDefault();
-            first.focus();
-        } else if (!dialog.contains(document.activeElement)) {
-            event.preventDefault();
-            first.focus();
+        if (modal) {
+            modal.hide();
         }
     }
 
@@ -347,13 +297,15 @@
     }
 
     if (popup) {
-        // Keep the dialog in a predictable stacking context.
+        // Bootstrap modals must be at the top level of the page.
         document.body.appendChild(popup);
 
-        popup.addEventListener('click', function (event) {
-            if (event.target === popup || event.target.closest('[data-plugiit-ann-close]')) {
-                closePopup();
+        popup.addEventListener('hidden.bs.modal', function () {
+            if (lastFocus && typeof lastFocus.focus === 'function' && document.body.contains(lastFocus)) {
+                lastFocus.focus();
             }
+
+            document.dispatchEvent(new CustomEvent('plugiit-ann:popup-closed'));
         });
 
         var schedulePopup = function () {

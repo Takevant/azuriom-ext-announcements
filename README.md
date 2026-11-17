@@ -106,7 +106,7 @@ window.Announcements.closePopup();
 
 ### Compatibility
 
-All HTML, CSS classes and IDs are prefixed with `plugiit-ann-`. The script is a dependency-free IIFE. Z-index: bars `1031` (in the page flow), popup `1060`, below a cookie banner at `1080`.
+The plugin ships no stylesheet: bars are Bootstrap alerts and popups are Bootstrap modals, so they follow the colors of the theme, including its dark mode. Its IDs and data attributes are prefixed with `plugiit-ann-`. The script is an IIFE that only relies on the Bootstrap script loaded by Azuriom themes (`bootstrap.Modal`). Bars stay in the page flow; the popup uses the Bootstrap modal z-index (`1055`), below a cookie banner at `1080`.
 
 ## Known limitations
 
