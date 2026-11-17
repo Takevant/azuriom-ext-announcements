@@ -81,7 +81,7 @@
 
             if (remaining <= 0) {
                 element.textContent = texts.ended || '';
-                var bar = element.closest('.plugiit-ann-bar');
+                var bar = element.closest('[data-plugiit-ann-bar]');
 
                 if (bar) {
                     removeBar(bar);
@@ -104,10 +104,10 @@
     /* ------------------------------------------------------------------ */
 
     var container = document.getElementById('plugiit-ann-bars');
-    var rotation = {timer: null, index: 0, paused: false, dots: null};
+    var rotation = {timer: null, index: 0, paused: false};
 
     function bars() {
-        return container ? Array.prototype.slice.call(container.querySelectorAll('.plugiit-ann-bar')) : [];
+        return container ? Array.prototype.slice.call(container.querySelectorAll('[data-plugiit-ann-bar]')) : [];
     }
 
     function removeBar(bar) {
@@ -124,9 +124,7 @@
         }
 
         if (isRotating()) {
-            rotation.index = Math.min(rotation.index, bars().length - 1);
-            buildDots();
-            show(rotation.index);
+            show(Math.min(rotation.index, bars().length - 1));
         }
     }
 
@@ -134,54 +132,36 @@
         return container && container.getAttribute('data-plugiit-ann-mode') === 'rotate';
     }
 
-    function show(index) {
+    function show(index, animate) {
         var list = bars();
 
         if (list.length === 0) {
-            return;
+            return null;
         }
 
         rotation.index = (index + list.length) % list.length;
 
         list.forEach(function (bar, i) {
-            bar.classList.toggle('plugiit-ann-inactive', i !== rotation.index);
+            var active = i === rotation.index;
+
+            bar.classList.toggle('d-none', !active);
+
+            if (active && animate) {
+                // Replay the Bootstrap fade transition.
+                bar.classList.remove('show');
+                void bar.offsetWidth;
+                bar.classList.add('show');
+            }
+
+            var pager = bar.querySelector('[data-plugiit-ann-pager]');
+
+            if (pager) {
+                pager.hidden = list.length < 2;
+                pager.querySelector('[data-plugiit-ann-position]').textContent = (i + 1) + '/' + list.length;
+            }
         });
 
-        if (rotation.dots) {
-            Array.prototype.forEach.call(rotation.dots.children, function (dot, i) {
-                dot.setAttribute('aria-current', i === rotation.index ? 'true' : 'false');
-            });
-        }
-    }
-
-    function buildDots() {
-        if (rotation.dots) {
-            rotation.dots.parentNode && rotation.dots.parentNode.removeChild(rotation.dots);
-            rotation.dots = null;
-        }
-
-        var list = bars();
-
-        if (list.length < 2) {
-            return;
-        }
-
-        var dots = document.createElement('div');
-        dots.className = 'plugiit-ann-dots';
-
-        list.forEach(function (bar, i) {
-            var dot = document.createElement('button');
-            dot.type = 'button';
-            dot.className = 'plugiit-ann-dot';
-            dot.setAttribute('aria-label', (texts.show || 'Announcement') + ' ' + (i + 1) + '/' + list.length);
-            dot.addEventListener('click', function () {
-                show(i);
-            });
-            dots.appendChild(dot);
-        });
-
-        container.appendChild(dots);
-        rotation.dots = dots;
+        return list[rotation.index];
     }
 
     function stopRotation() {
@@ -192,23 +172,23 @@
     }
 
     function startRotation() {
-        if (!isRotating() || bars().length < 2) {
+        if (!isRotating()) {
             return;
         }
+
+        // Also hides the pagers when the other bars were dismissed.
+        show(0);
 
         var delay = parseInt(container.getAttribute('data-plugiit-ann-delay'), 10) || 6;
         var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        buildDots();
-        show(0);
-
-        if (reduceMotion) {
+        if (bars().length < 2 || reduceMotion) {
             return;
         }
 
         rotation.timer = window.setInterval(function () {
             if (!rotation.paused && !document.hidden) {
-                show(rotation.index + 1);
+                show(rotation.index + 1, true);
             }
         }, delay * 1000);
 
@@ -227,16 +207,29 @@
 
     if (container) {
         container.addEventListener('click', function (event) {
-            var button = event.target.closest('[data-plugiit-ann-close]');
+            var button = event.target.closest('[data-plugiit-ann-close], [data-plugiit-ann-prev], [data-plugiit-ann-next]');
 
             if (!button) {
                 return;
             }
 
-            var bar = button.closest('.plugiit-ann-bar');
+            var bar = button.closest('[data-plugiit-ann-bar]');
 
-            storageSet('localStorage', 'plugiit-ann-dismissed-' + bar.getAttribute('data-plugiit-ann-id'), bar.getAttribute('data-plugiit-ann-version'));
-            removeBar(bar);
+            if (button.hasAttribute('data-plugiit-ann-close')) {
+                storageSet('localStorage', 'plugiit-ann-dismissed-' + bar.getAttribute('data-plugiit-ann-id'), bar.getAttribute('data-plugiit-ann-version'));
+                removeBar(bar);
+
+                return;
+            }
+
+            var step = button.hasAttribute('data-plugiit-ann-prev') ? -1 : 1;
+            var shown = show(rotation.index + step, true);
+            var target = shown && shown.querySelector(button.hasAttribute('data-plugiit-ann-prev') ? '[data-plugiit-ann-prev]' : '[data-plugiit-ann-next]');
+
+            // The clicked bar is now hidden: keep the focus on the same button of the new bar.
+            if (target) {
+                target.focus();
+            }
         });
 
         startRotation();

@@ -38,7 +38,6 @@ class InjectAnnouncements
 
             $footer = view('announcements::footer', [
                 'popups' => $announcements['popups'],
-                'withBars' => $hasBars || $announcements['bars'] !== [],
             ])->render();
 
             $content = substr_replace($content, $footer, $end, 0);

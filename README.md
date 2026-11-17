@@ -10,7 +10,7 @@ Azuriom plugin · v1.0.2 · by Plugiit
 
 - **Two display types**: bars at the top of every page and/or modal **popups**.
 - **Markdown** messages, written with the Azuriom Markdown editor. Images and tables are displayed in popups only.
-- **Styles**: information, success, warning, danger or custom colors (background + text).
+- **Styles**: information, success, warning, danger (Bootstrap colors of the theme) or custom colors (background + text).
 - **Optional action button** (label + absolute or relative link).
 - **Scheduling** with start and end dates, plus an optional **countdown** until the end date (the bar disappears on its own when it ends).
 - **Audience targeting**: everyone, guests, logged-in members or specific roles.
@@ -18,7 +18,7 @@ Azuriom plugin · v1.0.2 · by Plugiit
 - **Dismissible bars**: the choice is stored in the visitor's browser (`localStorage`) per announcement **and version**. Editing the title, message or button shows the announcement again.
 - **Popup frequency**: only once, once per browsing session or on every page load.
 - **Priority**: orders the bars and picks the popup. Only **one popup per page load** is shown: the highest-priority one not already seen.
-- **Multiple active bars**: **stacked** or **rotating** (configurable delay, paused on hover and focus, navigation dots).
+- **Multiple active bars**: **stacked** or **rotating** (configurable delay, paused on hover and focus, previous / next buttons).
 - **Plays well with Plugiit Cookie Consent**: when it is installed, the popup waits until the visitor has answered the cookie banner, so two windows never stack.
 - **Cached** active announcements, invalidated on every creation, update or deletion.
 - **Accessible**: ARIA region, modal with trapped focus, Escape to close, labelled buttons.

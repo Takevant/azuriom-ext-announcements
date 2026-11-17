@@ -4,6 +4,8 @@ return [
     'region' => 'Announcements',
     'close' => 'Close',
     'dismiss' => 'Hide the announcement ":title"',
+    'previous' => 'Previous announcement',
+    'next' => 'Next announcement',
 
     'countdown' => [
         'prefix' => 'Ends in',
@@ -12,6 +14,5 @@ return [
         'minutes' => 'm',
         'seconds' => 's',
         'ended' => 'Ended',
-        'show' => 'Show announcement',
     ],
 ];

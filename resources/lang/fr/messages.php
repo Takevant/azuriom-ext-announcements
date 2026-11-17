@@ -4,6 +4,8 @@ return [
     'region' => 'Annonces',
     'close' => 'Fermer',
     'dismiss' => 'Masquer l\'annonce « :title »',
+    'previous' => 'Annonce précédente',
+    'next' => 'Annonce suivante',
 
     'countdown' => [
         'prefix' => 'Fin dans',
@@ -12,6 +14,5 @@ return [
         'minutes' => ' min',
         'seconds' => ' s',
         'ended' => 'Terminé',
-        'show' => 'Afficher l\'annonce',
     ],
 ];

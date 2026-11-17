@@ -1,6 +1,4 @@
-@unless($withBars ?? false)
-    <link rel="stylesheet" href="{{ plugin_asset('announcements', 'css/announcements.css') }}">
-@endunless
+<link rel="stylesheet" href="{{ plugin_asset('announcements', 'css/announcements.css') }}">
 @foreach($popups as $popup)
     <div class="plugiit-ann-modal" id="plugiit-ann-popup-{{ $popup['id'] }}" data-plugiit-ann-popup
          data-plugiit-ann-id="{{ $popup['id'] }}" data-plugiit-ann-version="{{ $popup['version'] }}" data-plugiit-ann-frequency="{{ $popup['frequency'] }}" hidden>

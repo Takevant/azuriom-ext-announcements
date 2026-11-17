@@ -2,30 +2,50 @@
 @php
     $bars ??= \Azuriom\Plugin\Announcements\Support\Announcements::forRequest(request(), auth()->user())['bars'];
     $barMode = \Azuriom\Plugin\Announcements\Support\Announcements::barMode();
+    $rotate = $barMode === 'rotate' && count($bars) > 1;
 @endphp
 @if(! empty($bars))
-    <link rel="stylesheet" href="{{ plugin_asset('announcements', 'css/announcements.css') }}">
-    <div id="plugiit-ann-bars" class="plugiit-ann-bars plugiit-ann-mode-{{ $barMode }}" role="region" aria-label="{{ trans('announcements::messages.region') }}"
+    <div id="plugiit-ann-bars" class="flex-shrink-0" role="region" aria-label="{{ trans('announcements::messages.region') }}"
          data-plugiit-ann-mode="{{ $barMode }}" data-plugiit-ann-delay="{{ \Azuriom\Plugin\Announcements\Support\Announcements::rotationDelay() }}">
         @foreach($bars as $bar)
-            <div class="plugiit-ann-bar plugiit-ann-style-{{ $bar['style'] }} @if($barMode === 'rotate' && ! $loop->first) plugiit-ann-inactive @endif"
-                 style="{{ \Azuriom\Plugin\Announcements\Support\Announcements::styleAttribute($bar) }}"
-                 data-plugiit-ann-id="{{ $bar['id'] }}" data-plugiit-ann-version="{{ $bar['version'] }}"
+            @php($custom = $bar['style'] === 'custom')
+            <div class="alert @unless($custom) alert-{{ $bar['style'] }} @endunless rounded-0 border-top-0 border-start-0 border-end-0 mb-0 py-2 px-0 @if($rotate) fade show @endif @if($rotate && ! $loop->first) d-none @endif"
+                 @if($custom) style="{{ \Azuriom\Plugin\Announcements\Support\Announcements::customColors($bar, 'bar') }}" @endif
+                 data-plugiit-ann-bar data-plugiit-ann-id="{{ $bar['id'] }}" data-plugiit-ann-version="{{ $bar['version'] }}"
                  @if($bar['dismissible']) data-plugiit-ann-dismissible @endif>
-                <div class="plugiit-ann-bar-inner">
-                    <div class="plugiit-ann-bar-content">
-                        <strong class="plugiit-ann-bar-title">{{ $bar['title'] }}</strong>
-                        <span class="plugiit-ann-message">{!! $bar['html'] !!}</span>
-                        @if($bar['countdown'])
-                            <span class="plugiit-ann-countdown" data-plugiit-ann-countdown="{{ $bar['ends_at'] }}"></span>
+                <div class="container d-flex align-items-center gap-2">
+                    @if($rotate)
+                        <div class="d-flex align-items-center flex-shrink-0 small" data-plugiit-ann-pager>
+                            <button type="button" class="btn btn-sm btn-link text-reset text-decoration-none px-1 py-0" data-plugiit-ann-prev aria-label="{{ trans('announcements::messages.previous') }}">
+                                <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                            </button>
+                            <span data-plugiit-ann-position>{{ $loop->iteration }}/{{ $loop->count }}</span>
+                            <button type="button" class="btn btn-sm btn-link text-reset text-decoration-none px-1 py-0" data-plugiit-ann-next aria-label="{{ trans('announcements::messages.next') }}">
+                                <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    @endif
+
+                    <div class="flex-grow-1 d-flex flex-wrap align-items-center justify-content-center column-gap-3 row-gap-1 text-center">
+                        <div>
+                            <i class="bi bi-{{ \Azuriom\Plugin\Announcements\Support\Announcements::icon($bar['style']) }} me-1" aria-hidden="true"></i>
+                            <strong class="me-1">{{ $bar['title'] }}</strong>
+                            <span>{!! $bar['html'] !!}</span>
+                            @if($bar['countdown'])
+                                <span class="badge rounded-pill @unless($custom) text-bg-{{ $bar['style'] }} @endunless ms-1"
+                                      @if($custom) style="{{ \Azuriom\Plugin\Announcements\Support\Announcements::customColors($bar, 'bar-badge') }}" @endif
+                                      data-plugiit-ann-countdown="{{ $bar['ends_at'] }}"></span>
+                            @endif
+                        </div>
+                        @if($bar['button_label'] && $bar['button_url'])
+                            <a href="{{ $bar['button_url'] }}" class="btn btn-sm @unless($custom) btn-{{ $bar['style'] }} @endunless"
+                               @if($custom) style="{{ \Azuriom\Plugin\Announcements\Support\Announcements::customColors($bar, 'bar-button') }}" @endif>{{ $bar['button_label'] }}</a>
                         @endif
                     </div>
-                    @if($bar['button_label'] && $bar['button_url'])
-                        <a href="{{ $bar['button_url'] }}" class="plugiit-ann-btn">{{ $bar['button_label'] }}</a>
-                    @endif
+
                     @if($bar['dismissible'])
-                        <button type="button" class="plugiit-ann-close" data-plugiit-ann-close aria-label="{{ trans('announcements::messages.dismiss', ['title' => $bar['title']]) }}">
-                            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path fill="currentColor" d="M2.1 2.1a1 1 0 0 1 1.4 0L8 6.6l4.5-4.5a1 1 0 1 1 1.4 1.4L9.4 8l4.5 4.5a1 1 0 0 1-1.4 1.4L8 9.4l-4.5 4.5a1 1 0 0 1-1.4-1.4L6.6 8 2.1 3.5a1 1 0 0 1 0-1.4z"/></svg>
+                        <button type="button" class="btn btn-sm btn-link text-reset text-decoration-none flex-shrink-0 px-1 py-0" data-plugiit-ann-close aria-label="{{ trans('announcements::messages.dismiss', ['title' => $bar['title']]) }}">
+                            <i class="bi bi-x-lg" aria-hidden="true"></i>
                         </button>
                     @endif
                 </div>
@@ -41,11 +61,11 @@
                         bar.parentNode.removeChild(bar);
                     }
                 });
-                var first = bars.querySelector('.plugiit-ann-bar');
+                var first = bars.querySelector('[data-plugiit-ann-bar]');
                 if (!first) {
                     bars.parentNode.removeChild(bars);
                 } else {
-                    first.classList.remove('plugiit-ann-inactive');
+                    first.classList.remove('d-none');
                 }
             } catch (e) {
             }

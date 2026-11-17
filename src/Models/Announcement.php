@@ -98,7 +98,20 @@ class Announcement extends Model
      */
     public function renderMessage(): string
     {
-        return Markdown::parse($this->message, $this->type === 'bar');
+        $html = Markdown::parse($this->message, $this->type === 'bar');
+
+        if ($this->type !== 'bar') {
+            return $html;
+        }
+
+        // Bars are displayed on one line: paragraphs become line breaks.
+        if (preg_match_all('#<p>(.*?)</p>#s', $html, $matches) > 0
+            && trim(preg_replace('#<p>.*?</p>#s', '', $html)) === '') {
+            $html = implode('<br>', $matches[1]);
+        }
+
+        // Raw HTML is escaped by the Markdown parser, so every "<a" is a link it generated.
+        return preg_replace('/<a\b/', '<a class="alert-link"', $html);
     }
 
     public function status(): string

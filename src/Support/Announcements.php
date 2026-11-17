@@ -15,6 +15,17 @@ class Announcements
 
     public const BAR_MODES = ['stacked', 'rotate'];
 
+    /**
+     * The Bootstrap icon of each style.
+     */
+    public const ICONS = [
+        'info' => 'info-circle-fill',
+        'success' => 'check-circle-fill',
+        'warning' => 'exclamation-triangle-fill',
+        'danger' => 'exclamation-octagon-fill',
+        'custom' => 'megaphone-fill',
+    ];
+
     public static function clearCache(): void
     {
         Cache::forget(self::CACHE_KEY);
@@ -149,6 +160,51 @@ class Announcements
     public static function rotationDelay(): int
     {
         return min(max((int) setting('announcements.rotation_delay', 6), 3), 60);
+    }
+
+    public static function icon(string $style): string
+    {
+        return self::ICONS[$style] ?? self::ICONS['custom'];
+    }
+
+    /**
+     * Bootstrap CSS variables applying the custom colors to a component.
+     * The other styles use the Bootstrap classes of the theme.
+     */
+    public static function customColors(array $announcement, string $component): string
+    {
+        $background = $announcement['color'] ?? '#5b5bd6';
+        $text = $announcement['text_color'] ?? '#ffffff';
+
+        return match ($component) {
+            // The bar itself: background and text colors.
+            'bar' => "--bs-alert-bg: {$background}; --bs-alert-color: {$text}; --bs-alert-border-color: {$background}; --bs-alert-link-color: {$text};",
+            // Elements on the bar use the inverted colors.
+            'bar-badge' => "background-color: {$text}; color: {$background};",
+            'bar-button' => self::buttonColors($text, $background, true),
+            default => '',
+        };
+    }
+
+    /**
+     * The CSS variables of a Bootstrap button, solid or outline.
+     */
+    protected static function buttonColors(string $background, string $text, bool $outline = false): string
+    {
+        $variables = [
+            '--bs-btn-color' => $outline ? $background : $text,
+            '--bs-btn-bg' => $outline ? 'transparent' : $background,
+            '--bs-btn-border-color' => $background,
+            '--bs-btn-hover-color' => $text,
+            '--bs-btn-hover-bg' => $background,
+            '--bs-btn-hover-border-color' => $background,
+            '--bs-btn-active-color' => $text,
+            '--bs-btn-active-bg' => $background,
+            '--bs-btn-active-border-color' => $background,
+            '--bs-btn-focus-shadow-rgb' => implode(', ', sscanf($background, '#%02x%02x%02x')),
+        ];
+
+        return collect($variables)->map(fn (string $value, string $name) => "{$name}: {$value};")->implode(' ');
     }
 
     /**
