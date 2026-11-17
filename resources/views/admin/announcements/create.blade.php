@@ -1,5 +1,7 @@
 @extends('admin.layouts.admin')
 
+@include('elements.markdown-editor')
+
 @section('title', trans('announcements::admin.announcements.create'))
 
 @section('content')

@@ -27,7 +27,7 @@
 
                     <div class="mb-3">
                         <label class="form-label" for="messageInput">{{ trans($t.'.fields.message') }}</label>
-                        <textarea class="form-control @error('message') is-invalid @enderror" id="messageInput" name="message" rows="5" required maxlength="5000" aria-describedby="messageHelp">{{ old('message', $announcement->message ?? '') }}</textarea>
+                        <textarea class="form-control markdown-editor @error('message') is-invalid @enderror" id="messageInput" name="message" rows="5" aria-describedby="messageHelp">{{ old('message', $announcement->message ?? '') }}</textarea>
                         @error('message')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
