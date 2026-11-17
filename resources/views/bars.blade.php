@@ -5,22 +5,22 @@
     $rotate = $barMode === 'rotate' && count($bars) > 1;
 @endphp
 @if(! empty($bars))
-    <div id="plugiit-ann-bars" class="flex-shrink-0" role="region" aria-label="{{ trans('announcements::messages.region') }}"
-         data-plugiit-ann-mode="{{ $barMode }}" data-plugiit-ann-delay="{{ \Azuriom\Plugin\Announcements\Support\Announcements::rotationDelay() }}">
+    <div id="announcements-bars" class="flex-shrink-0" role="region" aria-label="{{ trans('announcements::messages.region') }}"
+         data-announcements-mode="{{ $barMode }}" data-announcements-delay="{{ \Azuriom\Plugin\Announcements\Support\Announcements::rotationDelay() }}">
         @foreach($bars as $bar)
             @php($custom = $bar['style'] === 'custom')
             <div class="alert @unless($custom) alert-{{ $bar['style'] }} @endunless rounded-0 border-top-0 border-start-0 border-end-0 mb-0 py-2 px-0 @if($rotate) fade show @endif @if($rotate && ! $loop->first) d-none @endif"
                  @if($custom) style="{{ \Azuriom\Plugin\Announcements\Support\Announcements::customColors($bar, 'bar') }}" @endif
-                 data-plugiit-ann-bar data-plugiit-ann-id="{{ $bar['id'] }}" data-plugiit-ann-version="{{ $bar['version'] }}"
-                 @if($bar['dismissible']) data-plugiit-ann-dismissible @endif>
+                 data-announcements-bar data-announcements-id="{{ $bar['id'] }}" data-announcements-version="{{ $bar['version'] }}"
+                 @if($bar['dismissible']) data-announcements-dismissible @endif>
                 <div class="container d-flex align-items-center gap-2">
                     @if($rotate)
-                        <div class="d-flex align-items-center flex-shrink-0 small" data-plugiit-ann-pager>
-                            <button type="button" class="btn btn-sm btn-link text-reset text-decoration-none px-1 py-0" data-plugiit-ann-prev aria-label="{{ trans('announcements::messages.previous') }}">
+                        <div class="d-flex align-items-center flex-shrink-0 small" data-announcements-pager>
+                            <button type="button" class="btn btn-sm btn-link text-reset text-decoration-none px-1 py-0" data-announcements-prev aria-label="{{ trans('announcements::messages.previous') }}">
                                 <i class="bi bi-chevron-left" aria-hidden="true"></i>
                             </button>
-                            <span data-plugiit-ann-position>{{ $loop->iteration }}/{{ $loop->count }}</span>
-                            <button type="button" class="btn btn-sm btn-link text-reset text-decoration-none px-1 py-0" data-plugiit-ann-next aria-label="{{ trans('announcements::messages.next') }}">
+                            <span data-announcements-position>{{ $loop->iteration }}/{{ $loop->count }}</span>
+                            <button type="button" class="btn btn-sm btn-link text-reset text-decoration-none px-1 py-0" data-announcements-next aria-label="{{ trans('announcements::messages.next') }}">
                                 <i class="bi bi-chevron-right" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -34,7 +34,7 @@
                             @if($bar['countdown'])
                                 <span class="badge rounded-pill @unless($custom) text-bg-{{ $bar['style'] }} @endunless ms-1"
                                       @if($custom) style="{{ \Azuriom\Plugin\Announcements\Support\Announcements::customColors($bar, 'bar-badge') }}" @endif
-                                      data-plugiit-ann-countdown="{{ $bar['ends_at'] }}"></span>
+                                      data-announcements-countdown="{{ $bar['ends_at'] }}"></span>
                             @endif
                         </div>
                         @if($bar['button_label'] && $bar['button_url'])
@@ -44,7 +44,7 @@
                     </div>
 
                     @if($bar['dismissible'])
-                        <button type="button" class="btn btn-sm btn-link text-reset text-decoration-none flex-shrink-0 px-1 py-0" data-plugiit-ann-close aria-label="{{ trans('announcements::messages.dismiss', ['title' => $bar['title']]) }}">
+                        <button type="button" class="btn btn-sm btn-link text-reset text-decoration-none flex-shrink-0 px-1 py-0" data-announcements-close aria-label="{{ trans('announcements::messages.dismiss', ['title' => $bar['title']]) }}">
                             <i class="bi bi-x-lg" aria-hidden="true"></i>
                         </button>
                     @endif
@@ -55,13 +55,13 @@
     <script>
         (function () {
             try {
-                var bars = document.getElementById('plugiit-ann-bars');
-                Array.prototype.forEach.call(bars.querySelectorAll('[data-plugiit-ann-dismissible]'), function (bar) {
-                    if (window.localStorage.getItem('plugiit-ann-dismissed-' + bar.getAttribute('data-plugiit-ann-id')) === bar.getAttribute('data-plugiit-ann-version')) {
+                var bars = document.getElementById('announcements-bars');
+                Array.prototype.forEach.call(bars.querySelectorAll('[data-announcements-dismissible]'), function (bar) {
+                    if (window.localStorage.getItem('announcements-dismissed-' + bar.getAttribute('data-announcements-id')) === bar.getAttribute('data-announcements-version')) {
                         bar.parentNode.removeChild(bar);
                     }
                 });
-                var first = bars.querySelector('[data-plugiit-ann-bar]');
+                var first = bars.querySelector('[data-announcements-bar]');
                 if (!first) {
                     bars.parentNode.removeChild(bars);
                 } else {

@@ -9,7 +9,7 @@
     }
 
     var config = {texts: {}};
-    var configElement = document.getElementById('plugiit-ann-config');
+    var configElement = document.getElementById('announcements-config');
 
     try {
         config = JSON.parse(configElement.textContent) || config;
@@ -68,10 +68,10 @@
 
     function updateCountdowns() {
         var now = Date.now();
-        var elements = document.querySelectorAll('[data-plugiit-ann-countdown]');
+        var elements = document.querySelectorAll('[data-announcements-countdown]');
 
         Array.prototype.forEach.call(elements, function (element) {
-            var end = Date.parse(element.getAttribute('data-plugiit-ann-countdown'));
+            var end = Date.parse(element.getAttribute('data-announcements-countdown'));
 
             if (isNaN(end)) {
                 return;
@@ -81,13 +81,13 @@
 
             if (remaining <= 0) {
                 element.textContent = texts.ended || '';
-                var bar = element.closest('[data-plugiit-ann-bar]');
+                var bar = element.closest('[data-announcements-bar]');
 
                 if (bar) {
                     removeBar(bar);
                 }
 
-                element.removeAttribute('data-plugiit-ann-countdown');
+                element.removeAttribute('data-announcements-countdown');
 
                 return;
             }
@@ -103,11 +103,11 @@
     /* Bars                                                                */
     /* ------------------------------------------------------------------ */
 
-    var container = document.getElementById('plugiit-ann-bars');
+    var container = document.getElementById('announcements-bars');
     var rotation = {timer: null, index: 0, paused: false};
 
     function bars() {
-        return container ? Array.prototype.slice.call(container.querySelectorAll('[data-plugiit-ann-bar]')) : [];
+        return container ? Array.prototype.slice.call(container.querySelectorAll('[data-announcements-bar]')) : [];
     }
 
     function removeBar(bar) {
@@ -129,7 +129,7 @@
     }
 
     function isRotating() {
-        return container && container.getAttribute('data-plugiit-ann-mode') === 'rotate';
+        return container && container.getAttribute('data-announcements-mode') === 'rotate';
     }
 
     function show(index, animate) {
@@ -153,11 +153,11 @@
                 bar.classList.add('show');
             }
 
-            var pager = bar.querySelector('[data-plugiit-ann-pager]');
+            var pager = bar.querySelector('[data-announcements-pager]');
 
             if (pager) {
                 pager.hidden = list.length < 2;
-                pager.querySelector('[data-plugiit-ann-position]').textContent = (i + 1) + '/' + list.length;
+                pager.querySelector('[data-announcements-position]').textContent = (i + 1) + '/' + list.length;
             }
         });
 
@@ -179,7 +179,7 @@
         // Also hides the pagers when the other bars were dismissed.
         show(0);
 
-        var delay = parseInt(container.getAttribute('data-plugiit-ann-delay'), 10) || 6;
+        var delay = parseInt(container.getAttribute('data-announcements-delay'), 10) || 6;
         var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         if (bars().length < 2 || reduceMotion) {
@@ -207,24 +207,24 @@
 
     if (container) {
         container.addEventListener('click', function (event) {
-            var button = event.target.closest('[data-plugiit-ann-close], [data-plugiit-ann-prev], [data-plugiit-ann-next]');
+            var button = event.target.closest('[data-announcements-close], [data-announcements-prev], [data-announcements-next]');
 
             if (!button) {
                 return;
             }
 
-            var bar = button.closest('[data-plugiit-ann-bar]');
+            var bar = button.closest('[data-announcements-bar]');
 
-            if (button.hasAttribute('data-plugiit-ann-close')) {
-                storageSet('localStorage', 'plugiit-ann-dismissed-' + bar.getAttribute('data-plugiit-ann-id'), bar.getAttribute('data-plugiit-ann-version'));
+            if (button.hasAttribute('data-announcements-close')) {
+                storageSet('localStorage', 'announcements-dismissed-' + bar.getAttribute('data-announcements-id'), bar.getAttribute('data-announcements-version'));
                 removeBar(bar);
 
                 return;
             }
 
-            var step = button.hasAttribute('data-plugiit-ann-prev') ? -1 : 1;
+            var step = button.hasAttribute('data-announcements-prev') ? -1 : 1;
             var shown = show(rotation.index + step, true);
-            var target = shown && shown.querySelector(button.hasAttribute('data-plugiit-ann-prev') ? '[data-plugiit-ann-prev]' : '[data-plugiit-ann-next]');
+            var target = shown && shown.querySelector(button.hasAttribute('data-announcements-prev') ? '[data-announcements-prev]' : '[data-announcements-next]');
 
             // The clicked bar is now hidden: keep the focus on the same button of the new bar.
             if (target) {
@@ -244,10 +244,10 @@
     var lastFocus = null;
 
     function alreadySeen(element) {
-        var key = 'plugiit-ann-seen-' + element.getAttribute('data-plugiit-ann-id');
-        var version = element.getAttribute('data-plugiit-ann-version');
+        var key = 'announcements-seen-' + element.getAttribute('data-announcements-id');
+        var version = element.getAttribute('data-announcements-version');
 
-        switch (element.getAttribute('data-plugiit-ann-frequency')) {
+        switch (element.getAttribute('data-announcements-frequency')) {
             case 'once':
                 return storageGet('localStorage', key) === version;
             case 'session':
@@ -258,9 +258,9 @@
     }
 
     function markSeen(element) {
-        var key = 'plugiit-ann-seen-' + element.getAttribute('data-plugiit-ann-id');
-        var version = element.getAttribute('data-plugiit-ann-version');
-        var frequency = element.getAttribute('data-plugiit-ann-frequency');
+        var key = 'announcements-seen-' + element.getAttribute('data-announcements-id');
+        var version = element.getAttribute('data-announcements-version');
+        var frequency = element.getAttribute('data-announcements-frequency');
 
         if (frequency === 'once') {
             storageSet('localStorage', key, version);
@@ -286,7 +286,7 @@
         }
     }
 
-    var candidates = document.querySelectorAll('[data-plugiit-ann-popup]');
+    var candidates = document.querySelectorAll('[data-announcements-popup]');
 
     for (var i = 0; i < candidates.length; i++) {
         if (!popup && !alreadySeen(candidates[i])) {
@@ -305,7 +305,7 @@
                 lastFocus.focus();
             }
 
-            document.dispatchEvent(new CustomEvent('plugiit-ann:popup-closed'));
+            document.dispatchEvent(new CustomEvent('announcements:popup-closed'));
         });
 
         window.setTimeout(openPopup, 600);
