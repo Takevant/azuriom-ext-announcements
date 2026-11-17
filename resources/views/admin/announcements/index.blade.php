@@ -27,8 +27,9 @@
                         <tr>
                             <th scope="row">{{ $announcement->id }}</th>
                             <td>
-                                @php($swatch = ['info' => '#2563eb', 'success' => '#15803d', 'warning' => '#f59e0b', 'danger' => '#c81e1e'][$announcement->style] ?? ($announcement->color ?? '#5b5bd6'))
-                                <span class="d-inline-block rounded-circle me-1 align-middle" style="width: .75rem; height: .75rem; background: {{ $swatch }}" aria-hidden="true"></span>
+                                <i class="bi bi-{{ \Azuriom\Plugin\Announcements\Support\Announcements::icon($announcement->style) }} @if($announcement->style !== 'custom') text-{{ $announcement->style }} @endif me-1"
+                                   @if($announcement->style === 'custom') style="color: {{ $announcement->color ?? '#5b5bd6' }}" @endif
+                                   title="{{ trans('announcements::admin.announcements.styles.'.$announcement->style) }}" aria-hidden="true"></i>
                                 {{ $announcement->title }}
                             </td>
                             <td>

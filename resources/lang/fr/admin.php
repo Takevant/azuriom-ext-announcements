@@ -64,10 +64,10 @@ return [
             'popup' => 'Popup (fenêtre modale)',
         ],
         'styles' => [
-            'info' => 'Information (bleu)',
-            'success' => 'Succès (vert)',
-            'warning' => 'Alerte (orange)',
-            'danger' => 'Danger (rouge)',
+            'info' => 'Information',
+            'success' => 'Succès',
+            'warning' => 'Alerte',
+            'danger' => 'Danger',
             'custom' => 'Couleurs personnalisées',
         ],
         'audiences' => [
