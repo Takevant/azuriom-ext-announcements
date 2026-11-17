@@ -51,7 +51,7 @@
                         </div>
                         <div class="col-md-7">
                             <label class="form-label" for="buttonUrlInput">{{ trans($t.'.fields.button_url') }}</label>
-                            <input type="text" class="form-control @error('button_url') is-invalid @enderror" id="buttonUrlInput" name="button_url" value="{{ old('button_url', $announcement->button_url ?? '') }}" maxlength="255" placeholder="https://… ou /shop" aria-describedby="buttonHelp">
+                            <input type="text" class="form-control @error('button_url') is-invalid @enderror" id="buttonUrlInput" name="button_url" value="{{ old('button_url', $announcement->button_url ?? '') }}" maxlength="255" placeholder="{{ trans($t.'.placeholders.button_url') }}" aria-describedby="buttonHelp">
                             @error('button_url')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror

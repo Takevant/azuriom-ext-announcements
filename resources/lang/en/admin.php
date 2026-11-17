@@ -56,6 +56,10 @@ return [
             'frequency' => 'The popup can always be closed; the frequency sets when it is displayed again.',
         ],
 
+        'placeholders' => [
+            'button_url' => 'https://… or /shop',
+        ],
+
         'formats' => [
             'markdown' => 'Markdown',
             'html' => 'Simple HTML',

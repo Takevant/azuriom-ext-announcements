@@ -56,6 +56,10 @@ return [
             'frequency' => 'Le popup peut toujours être fermé ; la fréquence détermine quand il est réaffiché.',
         ],
 
+        'placeholders' => [
+            'button_url' => 'https://… ou /shop',
+        ],
+
         'formats' => [
             'markdown' => 'Markdown',
             'html' => 'HTML simple',
