@@ -200,14 +200,24 @@ class Announcements
             '--bs-btn-bg' => $outline ? 'transparent' : $background,
             '--bs-btn-border-color' => $background,
             '--bs-btn-hover-color' => $text,
-            '--bs-btn-hover-bg' => $background,
-            '--bs-btn-hover-border-color' => $background,
+            '--bs-btn-hover-bg' => $outline ? $background : self::shade($background, 0.15),
+            '--bs-btn-hover-border-color' => $outline ? $background : self::shade($background, 0.2),
             '--bs-btn-active-color' => $text,
-            '--bs-btn-active-bg' => $background,
-            '--bs-btn-active-border-color' => $background,
+            '--bs-btn-active-bg' => $outline ? $background : self::shade($background, 0.2),
+            '--bs-btn-active-border-color' => $outline ? $background : self::shade($background, 0.25),
             '--bs-btn-focus-shadow-rgb' => implode(', ', sscanf($background, '#%02x%02x%02x')),
         ];
 
         return collect($variables)->map(fn (string $value, string $name) => "{$name}: {$value};")->implode(' ');
+    }
+
+    /**
+     * Mix a #rrggbb color with black, like the Bootstrap shade-color() function.
+     */
+    protected static function shade(string $color, float $weight): string
+    {
+        return '#'.collect(sscanf($color, '#%02x%02x%02x'))
+            ->map(fn (int $channel) => sprintf('%02x', (int) round($channel * (1 - $weight))))
+            ->implode('');
     }
 }
