@@ -4,7 +4,6 @@ namespace Azuriom\Plugin\Announcements\Models;
 
 use Azuriom\Models\Traits\Loggable;
 use Azuriom\Plugin\Announcements\Support\Announcements;
-use Azuriom\Plugin\Announcements\Support\HtmlSanitizer;
 use Azuriom\Support\Markdown;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $title
  * @property string $message
- * @property string $format
  * @property string $type
  * @property string $style
  * @property string|null $color
@@ -42,8 +40,6 @@ class Announcement extends Model
 
     public const TYPES = ['bar', 'popup'];
 
-    public const FORMATS = ['markdown', 'html'];
-
     public const STYLES = ['info', 'success', 'warning', 'danger', 'custom'];
 
     public const AUDIENCES = ['all', 'guests', 'users', 'roles'];
@@ -56,12 +52,12 @@ class Announcement extends Model
      * Changing one of these attributes displays the announcement again to
      * visitors who closed it.
      */
-    private const CONTENT_ATTRIBUTES = ['title', 'message', 'format', 'button_label', 'button_url', 'type'];
+    private const CONTENT_ATTRIBUTES = ['title', 'message', 'button_label', 'button_url', 'type'];
 
     protected $table = 'announcements';
 
     protected $fillable = [
-        'title', 'message', 'format', 'type', 'style', 'color', 'text_color',
+        'title', 'message', 'type', 'style', 'color', 'text_color',
         'button_label', 'button_url', 'starts_at', 'ends_at', 'has_countdown',
         'audience', 'roles', 'pages', 'page_patterns', 'is_dismissible',
         'frequency', 'priority', 'is_enabled',
@@ -97,14 +93,10 @@ class Announcement extends Model
     }
 
     /**
-     * The safe HTML of the message.
+     * The HTML of the Markdown message.
      */
     public function renderMessage(): string
     {
-        if ($this->format === 'html') {
-            return HtmlSanitizer::clean($this->message);
-        }
-
         return Markdown::parse($this->message, true);
     }
 

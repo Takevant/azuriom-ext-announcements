@@ -15,7 +15,6 @@ return new class extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('message');
-            $table->string('format', 10)->default('markdown');
             $table->string('type', 10)->default('bar');
             $table->string('style', 10)->default('info');
             $table->string('color', 7)->nullable();

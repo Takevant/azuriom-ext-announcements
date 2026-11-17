@@ -26,14 +26,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <div class="d-flex justify-content-between align-items-end gap-2 mb-2">
-                            <label class="form-label mb-0" for="messageInput">{{ trans($t.'.fields.message') }}</label>
-                            <select class="form-select form-select-sm w-auto @error('format') is-invalid @enderror" name="format" aria-label="{{ trans($t.'.fields.format') }}">
-                                @foreach(\Azuriom\Plugin\Announcements\Models\Announcement::FORMATS as $format)
-                                    <option value="{{ $format }}" @selected(old('format', $announcement->format ?? 'markdown') === $format)>{{ trans($t.'.formats.'.$format) }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <label class="form-label" for="messageInput">{{ trans($t.'.fields.message') }}</label>
                         <textarea class="form-control @error('message') is-invalid @enderror" id="messageInput" name="message" rows="5" required maxlength="5000" aria-describedby="messageHelp">{{ old('message', $announcement->message ?? '') }}</textarea>
                         @error('message')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

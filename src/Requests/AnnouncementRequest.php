@@ -4,7 +4,6 @@ namespace Azuriom\Plugin\Announcements\Requests;
 
 use Azuriom\Http\Requests\Traits\ConvertCheckbox;
 use Azuriom\Plugin\Announcements\Models\Announcement;
-use Azuriom\Plugin\Announcements\Support\HtmlSanitizer;
 use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -34,14 +33,13 @@ class AnnouncementRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:150'],
             'message' => ['required', 'string', 'max:5000'],
-            'format' => ['required', Rule::in(Announcement::FORMATS)],
             'type' => ['required', Rule::in(Announcement::TYPES)],
             'style' => ['required', Rule::in(Announcement::STYLES)],
             'color' => [...$color, 'required_if:style,custom'],
             'text_color' => [...$color, 'required_if:style,custom'],
             'button_label' => ['nullable', 'required_with:button_url', 'string', 'max:50'],
             'button_url' => ['nullable', 'required_with:button_label', 'string', 'max:255', function (string $attribute, mixed $value, Closure $fail) {
-                if (! HtmlSanitizer::isSafeUrl($value)) {
+                if (! self::isSafeUrl($value)) {
                     $fail(trans('validation.url'));
                 }
             }],
@@ -71,6 +69,22 @@ class AnnouncementRequest extends FormRequest
             ->only(array_keys($this->rules()))
             ->map(fn (string $label) => mb_strtolower($label))
             ->all();
+    }
+
+    /**
+     * Only allow relative, http(s) and mailto links.
+     */
+    protected static function isSafeUrl(string $url): bool
+    {
+        $normalized = strtolower(preg_replace('/[\x00-\x20]+/', '', $url));
+
+        if (preg_match('/^[a-z][a-z0-9+.-]*:/', $normalized) !== 1) {
+            return true; // Relative URL
+        }
+
+        return str_starts_with($normalized, 'http:')
+            || str_starts_with($normalized, 'https:')
+            || str_starts_with($normalized, 'mailto:');
     }
 
     /**

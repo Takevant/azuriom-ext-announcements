@@ -24,7 +24,6 @@ return [
         'fields' => [
             'title' => 'Titre',
             'message' => 'Message',
-            'format' => 'Format du message',
             'type' => 'Type',
             'style' => 'Style',
             'color' => 'Couleur de fond',
@@ -47,7 +46,7 @@ return [
         ],
 
         'help' => [
-            'message' => 'Markdown : **gras**, *italique*, [lien](https://…). HTML simple : <strong>, <em>, <a>, <br>, <ul>… (les autres balises et attributs sont supprimés).',
+            'message' => 'Markdown : **gras**, *italique*, [lien](https://…).',
             'button' => 'Optionnel. Lien absolu (https://…) ou relatif (/shop).',
             'dates' => 'Laisser vide pour une annonce sans début ou sans fin. Fuseau horaire du site.',
             'page_patterns' => 'Un motif par ligne, * pour n\'importe quelle suite. Exemples : vote, forum/*, shop/categories/*. Utilisez / pour l\'accueil.',
@@ -60,10 +59,6 @@ return [
             'button_url' => 'https://… ou /shop',
         ],
 
-        'formats' => [
-            'markdown' => 'Markdown',
-            'html' => 'HTML simple',
-        ],
         'types' => [
             'bar' => 'Barre en haut du site',
             'popup' => 'Popup (fenêtre modale)',

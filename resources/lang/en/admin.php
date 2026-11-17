@@ -24,7 +24,6 @@ return [
         'fields' => [
             'title' => 'Title',
             'message' => 'Message',
-            'format' => 'Message format',
             'type' => 'Type',
             'style' => 'Style',
             'color' => 'Background color',
@@ -47,7 +46,7 @@ return [
         ],
 
         'help' => [
-            'message' => 'Markdown: **bold**, *italic*, [link](https://…). Simple HTML: <strong>, <em>, <a>, <br>, <ul>… (other tags and attributes are removed).',
+            'message' => 'Markdown: **bold**, *italic*, [link](https://…).',
             'button' => 'Optional. Absolute (https://…) or relative (/shop) link.',
             'dates' => 'Leave empty for no start or no end. Website timezone.',
             'page_patterns' => 'One pattern per line, * matches anything. Examples: vote, forum/*, shop/categories/*. Use / for the home page.',
@@ -60,10 +59,6 @@ return [
             'button_url' => 'https://… or /shop',
         ],
 
-        'formats' => [
-            'markdown' => 'Markdown',
-            'html' => 'Simple HTML',
-        ],
         'types' => [
             'bar' => 'Bar at the top of the website',
             'popup' => 'Popup (modal window)',

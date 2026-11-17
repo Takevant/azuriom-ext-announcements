@@ -9,7 +9,7 @@ Azuriom plugin · v1.0.2 · by Plugiit
 ## Features
 
 - **Two display types**: bars at the top of every page and/or modal **popups**.
-- **Markdown or safe simple HTML** messages. HTML goes through an allow-list (`strong`, `em`, `a`, `br`, `p`, `ul`, `ol`, `li`, `code`, etc.); scripts, event attributes and `javascript:` links are removed.
+- **Markdown** messages.
 - **Styles**: information, success, warning, danger or custom colors (background + text).
 - **Optional action button** (label + absolute or relative link).
 - **Scheduling** with start and end dates, plus an optional **countdown** until the end date (the bar disappears on its own when it ends).
@@ -66,7 +66,7 @@ The announcements list shows the status of each announcement: running, scheduled
 
 | Group | Fields |
 | --- | --- |
-| Content | Title (max. 150), message (max. 5000), format (Markdown / simple HTML), button text and link |
+| Content | Title (max. 150), Markdown message (max. 5000), button text and link |
 | Display | Type (bar / popup), style, custom background and text colors, dismissible, popup frequency, priority (-100 to 100), enabled |
 | Schedule | Start, end (website timezone), countdown until the end date |
 | Targeting | Audience (everyone / guests / members / roles), pages (all / home / shop / URL patterns) |
