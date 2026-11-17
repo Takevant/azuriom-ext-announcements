@@ -93,11 +93,12 @@ class Announcement extends Model
     }
 
     /**
-     * The HTML of the Markdown message.
+     * The HTML of the Markdown message. Images and tables are only
+     * rendered in popups, bars are too small for them.
      */
     public function renderMessage(): string
     {
-        return Markdown::parse($this->message, true);
+        return Markdown::parse($this->message, $this->type === 'bar');
     }
 
     public function status(): string

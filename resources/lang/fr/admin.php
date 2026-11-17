@@ -46,7 +46,7 @@ return [
         ],
 
         'help' => [
-            'message' => 'Markdown : **gras**, *italique*, [lien](https://…).',
+            'message' => 'Markdown : **gras**, *italique*, [lien](https://…). Les images et les tableaux ne sont affichés que dans les popups.',
             'button' => 'Optionnel. Lien absolu (https://…) ou relatif (/shop).',
             'dates' => 'Laisser vide pour une annonce sans début ou sans fin. Fuseau horaire du site.',
             'page_patterns' => 'Un motif par ligne, * pour n\'importe quelle suite. Exemples : vote, forum/*, shop/categories/*. Utilisez / pour l\'accueil.',

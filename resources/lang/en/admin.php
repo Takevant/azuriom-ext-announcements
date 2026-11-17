@@ -46,7 +46,7 @@ return [
         ],
 
         'help' => [
-            'message' => 'Markdown: **bold**, *italic*, [link](https://…).',
+            'message' => 'Markdown: **bold**, *italic*, [link](https://…). Images and tables are only displayed in popups.',
             'button' => 'Optional. Absolute (https://…) or relative (/shop) link.',
             'dates' => 'Leave empty for no start or no end. Website timezone.',
             'page_patterns' => 'One pattern per line, * matches anything. Examples: vote, forum/*, shop/categories/*. Use / for the home page.',

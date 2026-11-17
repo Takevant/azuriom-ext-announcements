@@ -9,7 +9,7 @@ Azuriom plugin · v1.0.2 · by Plugiit
 ## Features
 
 - **Two display types**: bars at the top of every page and/or modal **popups**.
-- **Markdown** messages, written with the Azuriom Markdown editor.
+- **Markdown** messages, written with the Azuriom Markdown editor. Images and tables are displayed in popups only.
 - **Styles**: information, success, warning, danger or custom colors (background + text).
 - **Optional action button** (label + absolute or relative link).
 - **Scheduling** with start and end dates, plus an optional **countdown** until the end date (the bar disappears on its own when it ends).
