@@ -1,7 +1,7 @@
 {
     "id": "announcements",
     "name": "Announcements",
-    "description": "Annonces planifiées : barres en haut du site et popups modales, avec ciblage par public, rôle et page, compte à rebours et fermeture mémorisée.",
+    "description": "Scheduled bars and popups for your website, targeted by audience, role and page.",
     "version": "1.0.0",
     "url": "https://takevant.com",
     "authors": [

@@ -1,7 +1,7 @@
 {
     "name": "azuriom/announcements",
     "type": "azuriom-plugin",
-    "description": "Barre d'annonce et popups planifi\u00e9s",
+    "description": "Scheduled bars and popups for your website, targeted by audience, role and page.",
     "autoload": {
         "psr-4": {
             "Azuriom\\Plugin\\Announcements\\": "src/"
