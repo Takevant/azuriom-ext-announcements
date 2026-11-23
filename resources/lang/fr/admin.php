@@ -111,7 +111,7 @@ return [
     ],
 
     'logs' => [
-        'announcements' => [
+        'tkt-announcements' => [
             'created' => 'Création de l\'annonce #:id',
             'updated' => 'Mise à jour de l\'annonce #:id',
             'deleted' => 'Suppression de l\'annonce #:id',
