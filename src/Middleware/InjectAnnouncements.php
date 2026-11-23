@@ -25,12 +25,12 @@ class InjectAnnouncements
             $content = $response->getContent();
             $end = strripos($content, '</body>');
 
-            if ($end === false || str_contains($content, 'id="announcements-config"')) {
+            if ($end === false || str_contains($content, 'id="tkt-announcements-config"')) {
                 return $response;
             }
 
             $announcements = Announcements::forRequest($request, $request->user());
-            $hasBars = str_contains($content, 'id="announcements-bars"');
+            $hasBars = str_contains($content, 'id="tkt-announcements-bars"');
 
             // The script is needed by the bars, even when the theme includes them.
             if ($announcements['popups'] === [] && $announcements['bars'] === []) {

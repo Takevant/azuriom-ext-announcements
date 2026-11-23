@@ -97,7 +97,7 @@ The automatic bar insertion is then disabled for that page. Popups are still inj
 
 ```js
 // Fired on document when a popup is closed
-document.addEventListener('announcements:popup-closed', () => { /* ... */ });
+document.addEventListener('tkt-announcements:popup-closed', () => { /* ... */ });
 
 // Close the open popup
 window.Announcements.closePopup();
@@ -105,7 +105,7 @@ window.Announcements.closePopup();
 
 ### Compatibility
 
-The plugin ships no stylesheet: bars are Bootstrap alerts and popups are Bootstrap modals, so they follow the colors of the theme, including its dark mode. Its IDs and data attributes are prefixed with `announcements-`. The script is an IIFE that only relies on the Bootstrap script loaded by Azuriom themes (`bootstrap.Modal`). Bars stay in the page flow; the popup uses the Bootstrap modal z-index (`1055`).
+The plugin ships no stylesheet: bars are Bootstrap alerts and popups are Bootstrap modals, so they follow the colors of the theme, including its dark mode. Its IDs and data attributes are prefixed with `tkt-announcements-`. The script is an IIFE that only relies on the Bootstrap script loaded by Azuriom themes (`bootstrap.Modal`). Bars stay in the page flow; the popup uses the Bootstrap modal z-index (`1055`).
 
 ## Known limitations
 
