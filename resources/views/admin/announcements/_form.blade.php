@@ -2,7 +2,7 @@
 
 @include('admin.elements.date-picker')
 
-@php($t = 'announcements::admin.announcements')
+@php($t = 'tkt-announcements::admin.announcements')
 
 <div v-scope="{
         type: @js(old('type', $announcement->type ?? 'bar')),
@@ -94,7 +94,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="typeSelect">{{ trans($t.'.fields.type') }}</label>
                         <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" v-model="type">
-                            @foreach(\Azuriom\Plugin\Announcements\Models\Announcement::TYPES as $type)
+                            @foreach(\Azuriom\Plugin\TktAnnouncements\Models\Announcement::TYPES as $type)
                                 <option value="{{ $type }}">{{ trans($t.'.types.'.$type) }}</option>
                             @endforeach
                         </select>
@@ -103,7 +103,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="styleSelect">{{ trans($t.'.fields.style') }}</label>
                         <select class="form-select @error('style') is-invalid @enderror" id="styleSelect" name="style" v-model="style">
-                            @foreach(\Azuriom\Plugin\Announcements\Models\Announcement::STYLES as $style)
+                            @foreach(\Azuriom\Plugin\TktAnnouncements\Models\Announcement::STYLES as $style)
                                 <option value="{{ $style }}">{{ trans($t.'.styles.'.$style) }}</option>
                             @endforeach
                         </select>
@@ -138,7 +138,7 @@
                     <div class="mb-3" v-if="type === 'popup'">
                         <label class="form-label" for="frequencySelect">{{ trans($t.'.fields.frequency') }}</label>
                         <select class="form-select @error('frequency') is-invalid @enderror" id="frequencySelect" name="frequency" aria-describedby="frequencyHelp">
-                            @foreach(\Azuriom\Plugin\Announcements\Models\Announcement::FREQUENCIES as $frequency)
+                            @foreach(\Azuriom\Plugin\TktAnnouncements\Models\Announcement::FREQUENCIES as $frequency)
                                 <option value="{{ $frequency }}" @selected(old('frequency', $announcement->frequency ?? 'once') === $frequency)>{{ trans($t.'.frequencies.'.$frequency) }}</option>
                             @endforeach
                         </select>
@@ -170,7 +170,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="audienceSelect">{{ trans($t.'.fields.audience') }}</label>
                         <select class="form-select @error('audience') is-invalid @enderror" id="audienceSelect" name="audience" v-model="audience">
-                            @foreach(\Azuriom\Plugin\Announcements\Models\Announcement::AUDIENCES as $audience)
+                            @foreach(\Azuriom\Plugin\TktAnnouncements\Models\Announcement::AUDIENCES as $audience)
                                 <option value="{{ $audience }}">{{ trans($t.'.audiences.'.$audience) }}</option>
                             @endforeach
                         </select>
@@ -191,7 +191,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="pagesSelect">{{ trans($t.'.fields.pages') }}</label>
                         <select class="form-select @error('pages') is-invalid @enderror" id="pagesSelect" name="pages" v-model="pages">
-                            @foreach(\Azuriom\Plugin\Announcements\Models\Announcement::PAGES as $page)
+                            @foreach(\Azuriom\Plugin\TktAnnouncements\Models\Announcement::PAGES as $page)
                                 <option value="{{ $page }}">{{ trans($t.'.pages_options.'.$page) }}</option>
                             @endforeach
                         </select>

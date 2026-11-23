@@ -1,8 +1,8 @@
 <?php
 
-namespace Azuriom\Plugin\Announcements\Middleware;
+namespace Azuriom\Plugin\TktAnnouncements\Middleware;
 
-use Azuriom\Plugin\Announcements\Support\Announcements;
+use Azuriom\Plugin\TktAnnouncements\Support\Announcements;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -37,14 +37,14 @@ class InjectAnnouncements
                 return $response;
             }
 
-            $footer = view('announcements::footer', [
+            $footer = view('tkt-announcements::footer', [
                 'popups' => $announcements['popups'],
             ])->render();
 
             $content = substr_replace($content, $footer, $end, 0);
 
             if (! $hasBars && $announcements['bars'] !== []) {
-                $bars = view('announcements::bars', [
+                $bars = view('tkt-announcements::bars', [
                     'bars' => $announcements['bars'],
                 ])->render();
 

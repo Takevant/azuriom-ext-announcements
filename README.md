@@ -37,10 +37,10 @@ Azuriom plugin · v1.0.0 · by Takevant
 1. Copy the plugin into the `plugins/` directory of your Azuriom installation. The folder **must be named after the plugin ID**, not after the repository:
 
    ```
-   plugins/announcements/
+   plugins/tkt-announcements/
    ```
 
-2. Enable the plugin from **Admin → Plugins**. The migrations create the `announcements` table.
+2. Enable the plugin from **Admin → Plugins**. The migrations create the `tkt_announcements` table.
 3. Create your announcements in **Admin → Announcements**.
 
 ## Configuration
@@ -49,15 +49,15 @@ Azuriom plugin · v1.0.0 · by Takevant
 
 | Permission | Description |
 | --- | --- |
-| `announcements.admin` | Manage announcements (bars and popups) |
+| `tkt-announcements.admin` | Manage announcements (bars and popups) |
 
 ### Admin pages
 
 | Page | URL |
 | --- | --- |
-| Announcements list | `/admin/announcements/announcements` |
-| Create an announcement | `/admin/announcements/announcements/create` |
-| Settings | `/admin/announcements/settings` |
+| Announcements list | `/admin/tkt-announcements/announcements` |
+| Create an announcement | `/admin/tkt-announcements/announcements/create` |
+| Settings | `/admin/tkt-announcements/settings` |
 
 The announcements list shows the status of each announcement: running, scheduled, ended or disabled.
 
@@ -88,7 +88,7 @@ The plugin has no public page. Announcements are injected by a global middleware
 To place the bars elsewhere (for example under the navbar), add this to your theme:
 
 ```blade
-@include('announcements::bars')
+@include('tkt-announcements::bars')
 ```
 
 The automatic bar insertion is then disabled for that page. Popups are still injected automatically.

@@ -1,7 +1,7 @@
 <?php
 
-use Azuriom\Plugin\Announcements\Controllers\Admin\AnnouncementController;
-use Azuriom\Plugin\Announcements\Controllers\Admin\SettingController;
+use Azuriom\Plugin\TktAnnouncements\Controllers\Admin\AnnouncementController;
+use Azuriom\Plugin\TktAnnouncements\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('can:announcements.admin')->group(function () {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Azuriom\Plugin\Announcements\Requests;
+namespace Azuriom\Plugin\TktAnnouncements\Requests;
 
 use Azuriom\Http\Requests\Traits\ConvertCheckbox;
-use Azuriom\Plugin\Announcements\Models\Announcement;
+use Azuriom\Plugin\TktAnnouncements\Models\Announcement;
 use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -65,7 +65,7 @@ class AnnouncementRequest extends FormRequest
      */
     public function attributes(): array
     {
-        return collect(trans('announcements::admin.announcements.fields'))
+        return collect(trans('tkt-announcements::admin.announcements.fields'))
             ->only(array_keys($this->rules()))
             ->map(fn (string $label) => mb_strtolower($label))
             ->all();

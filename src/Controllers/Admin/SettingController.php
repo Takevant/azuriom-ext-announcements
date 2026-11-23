@@ -1,11 +1,11 @@
 <?php
 
-namespace Azuriom\Plugin\Announcements\Controllers\Admin;
+namespace Azuriom\Plugin\TktAnnouncements\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Setting;
-use Azuriom\Plugin\Announcements\Support\Announcements;
+use Azuriom\Plugin\TktAnnouncements\Support\Announcements;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -13,7 +13,7 @@ class SettingController extends Controller
 {
     public function show()
     {
-        return view('announcements::admin.settings', [
+        return view('tkt-announcements::admin.settings', [
             'barMode' => Announcements::barMode(),
             'rotationDelay' => Announcements::rotationDelay(),
         ]);
@@ -27,13 +27,13 @@ class SettingController extends Controller
         ]);
 
         Setting::updateSettings([
-            'announcements.bar_mode' => $validated['bar_mode'],
-            'announcements.rotation_delay' => $validated['rotation_delay'],
+            'tkt-announcements.bar_mode' => $validated['bar_mode'],
+            'tkt-announcements.rotation_delay' => $validated['rotation_delay'],
         ]);
 
-        ActionLog::log('announcements.settings.updated');
+        ActionLog::log('tkt-announcements.settings.updated');
 
-        return to_route('announcements.admin.settings')
+        return to_route('tkt-announcements.admin.settings')
             ->with('success', trans('messages.status.success'));
     }
 }

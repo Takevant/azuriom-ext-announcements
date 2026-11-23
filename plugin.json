@@ -1,5 +1,5 @@
 {
-    "id": "announcements",
+    "id": "tkt-announcements",
     "name": "Announcements",
     "description": "Scheduled bars and popups for your website, targeted by audience, role and page.",
     "version": "1.0.0",
@@ -9,7 +9,7 @@
     ],
     "azuriom_api": "1.1.0",
     "providers": [
-        "\\Azuriom\\Plugin\\Announcements\\Providers\\AnnouncementsServiceProvider",
-        "\\Azuriom\\Plugin\\Announcements\\Providers\\RouteServiceProvider"
+        "\\Azuriom\\Plugin\\TktAnnouncements\\Providers\\TktAnnouncementsServiceProvider",
+        "\\Azuriom\\Plugin\\TktAnnouncements\\Providers\\RouteServiceProvider"
     ]
 }

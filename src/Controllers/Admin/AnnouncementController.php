@@ -1,11 +1,11 @@
 <?php
 
-namespace Azuriom\Plugin\Announcements\Controllers\Admin;
+namespace Azuriom\Plugin\TktAnnouncements\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\Role;
-use Azuriom\Plugin\Announcements\Models\Announcement;
-use Azuriom\Plugin\Announcements\Requests\AnnouncementRequest;
+use Azuriom\Plugin\TktAnnouncements\Models\Announcement;
+use Azuriom\Plugin\TktAnnouncements\Requests\AnnouncementRequest;
 
 class AnnouncementController extends Controller
 {
@@ -16,7 +16,7 @@ class AnnouncementController extends Controller
             ->orderByDesc('id')
             ->paginate(20);
 
-        return view('announcements::admin.announcements.index', [
+        return view('tkt-announcements::admin.announcements.index', [
             'announcements' => $announcements,
             'roles' => Role::pluck('name', 'id'),
         ]);
@@ -24,7 +24,7 @@ class AnnouncementController extends Controller
 
     public function create()
     {
-        return view('announcements::admin.announcements.create', [
+        return view('tkt-announcements::admin.announcements.create', [
             'roles' => Role::orderByDesc('power')->get(),
         ]);
     }
@@ -33,13 +33,13 @@ class AnnouncementController extends Controller
     {
         Announcement::create($request->announcementData());
 
-        return to_route('announcements.admin.announcements.index')
+        return to_route('tkt-announcements.admin.announcements.index')
             ->with('success', trans('messages.status.success'));
     }
 
     public function edit(Announcement $announcement)
     {
-        return view('announcements::admin.announcements.edit', [
+        return view('tkt-announcements::admin.announcements.edit', [
             'announcement' => $announcement,
             'roles' => Role::orderByDesc('power')->get(),
         ]);
@@ -49,7 +49,7 @@ class AnnouncementController extends Controller
     {
         $announcement->update($request->announcementData());
 
-        return to_route('announcements.admin.announcements.index')
+        return to_route('tkt-announcements.admin.announcements.index')
             ->with('success', trans('messages.status.success'));
     }
 
@@ -57,7 +57,7 @@ class AnnouncementController extends Controller
     {
         $announcement->delete();
 
-        return to_route('announcements.admin.announcements.index')
+        return to_route('tkt-announcements.admin.announcements.index')
             ->with('success', trans('messages.status.success'));
     }
 }
