@@ -1,8 +1,8 @@
 <?php
 
-namespace Azuriom\Plugin\TktAnnouncements\Middleware;
+namespace Azuriom\Plugin\Announcements\Middleware;
 
-use Azuriom\Plugin\TktAnnouncements\Support\Announcements;
+use Azuriom\Plugin\Announcements\Support\Announcements;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -25,26 +25,26 @@ class InjectAnnouncements
             $content = $response->getContent();
             $end = strripos($content, '</body>');
 
-            if ($end === false || str_contains($content, 'id="tkt-announcements-config"')) {
+            if ($end === false || str_contains($content, 'id="announcements-config"')) {
                 return $response;
             }
 
             $announcements = Announcements::forRequest($request, $request->user());
-            $hasBars = str_contains($content, 'id="tkt-announcements-bars"');
+            $hasBars = str_contains($content, 'id="announcements-bars"');
 
             // The script is needed by the bars, even when the theme includes them.
             if ($announcements['popups'] === [] && $announcements['bars'] === []) {
                 return $response;
             }
 
-            $footer = view('tkt-announcements::footer', [
+            $footer = view('announcements::footer', [
                 'popups' => $announcements['popups'],
             ])->render();
 
             $content = substr_replace($content, $footer, $end, 0);
 
             if (! $hasBars && $announcements['bars'] !== []) {
-                $bars = view('tkt-announcements::bars', [
+                $bars = view('announcements::bars', [
                     'bars' => $announcements['bars'],
                 ])->render();
 

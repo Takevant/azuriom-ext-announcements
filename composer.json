@@ -1,10 +1,10 @@
 {
-    "name": "azuriom/tkt-announcements",
+    "name": "azuriom/announcements",
     "type": "azuriom-plugin",
     "description": "Scheduled bars and popups for your website, targeted by audience, role and page.",
     "autoload": {
         "psr-4": {
-            "Azuriom\\Plugin\\TktAnnouncements\\": "src/"
+            "Azuriom\\Plugin\\Announcements\\": "src/"
         }
     },
     "replace": {

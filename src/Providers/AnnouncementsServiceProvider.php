@@ -1,14 +1,14 @@
 <?php
 
-namespace Azuriom\Plugin\TktAnnouncements\Providers;
+namespace Azuriom\Plugin\Announcements\Providers;
 
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Permission;
-use Azuriom\Plugin\TktAnnouncements\Middleware\InjectAnnouncements;
-use Azuriom\Plugin\TktAnnouncements\Models\Announcement;
+use Azuriom\Plugin\Announcements\Middleware\InjectAnnouncements;
+use Azuriom\Plugin\Announcements\Models\Announcement;
 
-class TktAnnouncementsServiceProvider extends BasePluginServiceProvider
+class AnnouncementsServiceProvider extends BasePluginServiceProvider
 {
     /**
      * The plugin's global HTTP middleware stack.
@@ -39,17 +39,17 @@ class TktAnnouncementsServiceProvider extends BasePluginServiceProvider
         $this->registerAdminNavigation();
 
         Permission::registerPermissions([
-            'tkt-announcements.admin' => 'tkt-announcements::admin.permission',
+            'announcements.admin' => 'announcements::admin.permission',
         ]);
 
         ActionLog::registerLogModels([
             Announcement::class,
-        ], 'tkt-announcements::admin.logs');
+        ], 'announcements::admin.logs');
 
-        ActionLog::registerLogs('tkt-announcements.settings.updated', [
+        ActionLog::registerLogs('announcements.settings.updated', [
             'icon' => 'megaphone',
             'color' => 'info',
-            'message' => 'tkt-announcements::admin.logs.settings',
+            'message' => 'announcements::admin.logs.settings',
         ]);
     }
 
@@ -61,15 +61,15 @@ class TktAnnouncementsServiceProvider extends BasePluginServiceProvider
     protected function adminNavigation(): array
     {
         return [
-            'tkt-announcements' => [
-                'name' => trans('tkt-announcements::admin.nav.title'),
+            'announcements' => [
+                'name' => trans('announcements::admin.nav.title'),
                 'type' => 'dropdown',
                 'icon' => 'bi bi-megaphone',
-                'route' => 'tkt-announcements.admin.*',
-                'permission' => 'tkt-announcements.admin',
+                'route' => 'announcements.admin.*',
+                'permission' => 'announcements.admin',
                 'items' => [
-                    'tkt-announcements.admin.announcements.index' => trans('tkt-announcements::admin.nav.announcements'),
-                    'tkt-announcements.admin.settings' => trans('tkt-announcements::admin.nav.settings'),
+                    'announcements.admin.announcements.index' => trans('announcements::admin.nav.announcements'),
+                    'announcements.admin.settings' => trans('announcements::admin.nav.settings'),
                 ],
             ],
         ];

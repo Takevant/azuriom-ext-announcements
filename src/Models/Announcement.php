@@ -1,9 +1,9 @@
 <?php
 
-namespace Azuriom\Plugin\TktAnnouncements\Models;
+namespace Azuriom\Plugin\Announcements\Models;
 
 use Azuriom\Models\Traits\Loggable;
-use Azuriom\Plugin\TktAnnouncements\Support\Announcements;
+use Azuriom\Plugin\Announcements\Support\Announcements;
 use Azuriom\Support\Markdown;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -54,7 +54,7 @@ class Announcement extends Model
      */
     private const CONTENT_ATTRIBUTES = ['title', 'message', 'button_label', 'button_url', 'type'];
 
-    protected $table = 'tkt_announcements';
+    protected $table = 'announcements';
 
     protected $fillable = [
         'title', 'message', 'type', 'style', 'color', 'text_color',

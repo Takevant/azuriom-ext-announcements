@@ -37,10 +37,10 @@ Azuriom plugin · v1.0.0 · by Takevant
 1. Copy the plugin into the `plugins/` directory of your Azuriom installation. The folder **must be named after the plugin ID**, not after the repository:
 
    ```
-   plugins/tkt-announcements/
+   plugins/announcements/
    ```
 
-2. Enable the plugin from **Admin → Plugins**. The migrations create the `tkt_announcements` table.
+2. Enable the plugin from **Admin → Plugins**. The migrations create the `announcements` table.
 3. Create your announcements in **Admin → Announcements**.
 
 ## Configuration
@@ -49,15 +49,15 @@ Azuriom plugin · v1.0.0 · by Takevant
 
 | Permission | Description |
 | --- | --- |
-| `tkt-announcements.admin` | Manage announcements (bars and popups) |
+| `announcements.admin` | Manage announcements (bars and popups) |
 
 ### Admin pages
 
 | Page | URL |
 | --- | --- |
-| Announcements list | `/admin/tkt-announcements/announcements` |
-| Create an announcement | `/admin/tkt-announcements/announcements/create` |
-| Settings | `/admin/tkt-announcements/settings` |
+| Announcements list | `/admin/announcements/announcements` |
+| Create an announcement | `/admin/announcements/announcements/create` |
+| Settings | `/admin/announcements/settings` |
 
 The announcements list shows the status of each announcement: running, scheduled, ended or disabled.
 
@@ -88,7 +88,7 @@ The plugin has no public page. Announcements are injected by a global middleware
 To place the bars elsewhere (for example under the navbar), add this to your theme:
 
 ```blade
-@include('tkt-announcements::bars')
+@include('announcements::bars')
 ```
 
 The automatic bar insertion is then disabled for that page. Popups are still injected automatically.
@@ -97,7 +97,7 @@ The automatic bar insertion is then disabled for that page. Popups are still inj
 
 ```js
 // Fired on document when a popup is closed
-document.addEventListener('tkt-announcements:popup-closed', () => { /* ... */ });
+document.addEventListener('announcements:popup-closed', () => { /* ... */ });
 
 // Close the open popup
 window.Announcements.closePopup();
@@ -105,7 +105,7 @@ window.Announcements.closePopup();
 
 ### Compatibility
 
-The plugin ships no stylesheet: bars are Bootstrap alerts and popups are Bootstrap modals, so they follow the colors of the theme, including its dark mode. Its IDs and data attributes are prefixed with `tkt-announcements-`. The script is an IIFE that only relies on the Bootstrap script loaded by Azuriom themes (`bootstrap.Modal`). Bars stay in the page flow; the popup uses the Bootstrap modal z-index (`1055`).
+The plugin ships no stylesheet: bars are Bootstrap alerts and popups are Bootstrap modals, so they follow the colors of the theme, including its dark mode. Its IDs and data attributes are prefixed with `announcements-`. The script is an IIFE that only relies on the Bootstrap script loaded by Azuriom themes (`bootstrap.Modal`). Bars stay in the page flow; the popup uses the Bootstrap modal z-index (`1055`).
 
 ## Known limitations
 
